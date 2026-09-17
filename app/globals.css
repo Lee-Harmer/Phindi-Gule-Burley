@@ -1,26 +1,271 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --crimson: #B83A2E;
+  --crimson-dark: #8f2c22;
+  --crimson-light: #d44438;
+  --gold: #C9974A;
+  --gold-light: #e0b76a;
+  --gold-dark: #a37838;
+  --cream: #FAF7F2;
+  --cream-dark: #f0ebe2;
+  --white: #FFFFFF;
+  --charcoal: #1C1C1A;
+  --charcoal-light: #2e2e2b;
+  --muted: #6B6660;
+  --muted-light: #9a9491;
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--cream);
+  --color-foreground: var(--charcoal);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--charcoal);
+  font-family: var(--font-inter), 'Inter', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-display {
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+}
+
+/* ── GRADIENT TEXT ── */
+.text-gradient {
+  background: linear-gradient(135deg, #B83A2E 0%, #C9974A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-gradient-warm {
+  background: linear-gradient(135deg, #ffffff 0%, #C9974A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── KEYFRAMES ── */
+
+/* Hero background blobs */
+@keyframes blob1 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.18; }
+  33%       { transform: translate(-40px, 25px) scale(1.12); opacity: 0.25; }
+  66%       { transform: translate(25px, -35px) scale(0.9); opacity: 0.13; }
+}
+@keyframes blob2 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.12; }
+  33%       { transform: translate(30px, -20px) scale(0.88); opacity: 0.18; }
+  66%       { transform: translate(-25px, 30px) scale(1.08); opacity: 0.08; }
+}
+
+/* Word-level hero entrance */
+@keyframes wordUp {
+  from {
+    opacity: 0;
+    transform: translateY(80px);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Floating stat cards */
+@keyframes float1 {
+  0%, 100% { transform: translateY(0px) rotate(-0.5deg); }
+  50%       { transform: translateY(-16px) rotate(0.5deg); }
 }
+@keyframes float2 {
+  0%, 100% { transform: translateY(-8px) rotate(0.5deg); }
+  50%       { transform: translateY(8px) rotate(-0.5deg); }
+}
+@keyframes float3 {
+  0%, 100% { transform: translateY(-4px) rotate(0deg); }
+  50%       { transform: translateY(-18px) rotate(0.3deg); }
+}
+
+/* Marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* General reveal */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Shimmer sweep */
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(200%); }
+}
+
+/* ── ANIMATION UTILITIES ── */
+.animate-blob-1  { animation: blob1 14s ease-in-out infinite; }
+.animate-blob-2  { animation: blob2 18s ease-in-out infinite 2s; }
+.animate-word-up { animation: wordUp 0.9s var(--ease-expo) both; }
+.animate-float-1 { animation: float1 4.5s ease-in-out infinite; }
+.animate-float-2 { animation: float2 5.5s ease-in-out infinite 0.6s; }
+.animate-float-3 { animation: float3 3.8s ease-in-out infinite 1.2s; }
+.animate-fade-in-up { animation: fadeInUp 0.8s ease both; }
+.animate-fade-in    { animation: fadeIn  1s ease both; }
+.animate-marquee    { animation: marquee 32s linear infinite; }
+
+.animation-delay-100 { animation-delay: 0.10s; }
+.animation-delay-150 { animation-delay: 0.15s; }
+.animation-delay-200 { animation-delay: 0.20s; }
+.animation-delay-300 { animation-delay: 0.30s; }
+.animation-delay-400 { animation-delay: 0.40s; }
+.animation-delay-450 { animation-delay: 0.45s; }
+.animation-delay-500 { animation-delay: 0.50s; }
+.animation-delay-600 { animation-delay: 0.60s; }
+.animation-delay-700 { animation-delay: 0.70s; }
+.animation-delay-750 { animation-delay: 0.75s; }
+.animation-delay-800 { animation-delay: 0.80s; }
+.animation-delay-900 { animation-delay: 0.90s; }
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s var(--ease-expo), transform 0.8s var(--ease-expo);
+}
+.js-reveal-ready .reveal:not(.visible) {
+  opacity: 0;
+  transform: translateY(50px);
+}
+.reveal.visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Staggered children */
+.reveal-stagger > *:nth-child(1) { transition-delay: 0.05s; }
+.reveal-stagger > *:nth-child(2) { transition-delay: 0.15s; }
+.reveal-stagger > *:nth-child(3) { transition-delay: 0.25s; }
+.reveal-stagger > *:nth-child(4) { transition-delay: 0.35s; }
+
+/* ── SECTION HELPERS ── */
+.section-cream    { background-color: var(--cream); color: var(--charcoal); }
+.section-charcoal { background-color: var(--charcoal); color: var(--white); }
+
+/* Diagonal clip-path dividers */
+.clip-angle-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 64px), 0 100%);
+  padding-bottom: calc(4rem + 64px);
+}
+.clip-angle-top {
+  clip-path: polygon(0 5vw, 100% 0, 100% 100%, 0 100%);
+  padding-top: calc(4rem + 5vw);
+  margin-top: -1px;
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--crimson);
+  color: var(--white);
+  padding: 0.9rem 2.25rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.8125rem;
+  display: inline-block;
+  transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.25), transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 0s;
+}
+.btn-primary:hover {
+  background-color: var(--crimson-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(184, 58, 46, 0.4);
+}
+.btn-primary:hover::after {
+  transform: translateX(200%);
+  transition: transform 0.55s ease;
+}
+
+.btn-outline {
+  border: 2px solid var(--white);
+  color: var(--white);
+  padding: 0.875rem 2.25rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.8125rem;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+  display: inline-block;
+}
+.btn-outline:hover {
+  background-color: var(--white);
+  color: var(--crimson);
+  transform: translateY(-3px);
+}
+
+.btn-outline-dark {
+  border: 2px solid var(--charcoal);
+  color: var(--charcoal);
+  padding: 0.875rem 2.25rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.8125rem;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+  display: inline-block;
+}
+.btn-outline-dark:hover {
+  background-color: var(--charcoal);
+  color: var(--white);
+  transform: translateY(-3px);
+}
+
+.btn-gold {
+  background-color: var(--gold);
+  color: var(--white);
+  padding: 0.9rem 2.25rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.8125rem;
+  transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  display: inline-block;
+}
+.btn-gold:hover {
+  background-color: var(--gold-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(201, 151, 74, 0.4);
+}
+
+/* ── DIVIDERS ── */
+.divider-gold    { width: 60px; height: 3px; background: var(--gold); }
+.divider-crimson { width: 60px; height: 3px; background: var(--crimson); }
+.divider-white   { width: 60px; height: 3px; background: rgba(255,255,255,0.4); }
+
+/* ── CUSTOM SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--crimson); border-radius: 3px; }
